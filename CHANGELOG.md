@@ -1,3 +1,8 @@
+## 0.0.6
+
+* 重构代码物理文件结构：将 `lib/src/text_sweep_light.dart` 核心内容完全合并迁移至 `lib/toto_sweep_light.dart` 入口文件中，实现极简单文件组件包。
+* 彻底清理并删除了无用的 `lib/src` 空目录，包体更加小巧干净。
+
 ## 0.0.5
 
 * 优化演示示例（Example）：添加可编辑的预览文本输入框（TextField）。

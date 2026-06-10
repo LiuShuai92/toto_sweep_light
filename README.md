@@ -26,7 +26,7 @@
 
 ```yaml
 dependencies:
-  toto_sweep_light: ^0.0.5
+  toto_sweep_light: ^0.0.6
 ```
 
 导入包：

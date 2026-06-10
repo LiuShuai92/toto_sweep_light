@@ -33,6 +33,7 @@ class SweepLightDemoPage extends StatefulWidget {
 
 class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
   final TotoSweepLightController _manualController = TotoSweepLightController();
+  late final TextEditingController _textController;
 
   // 动画状态相关变量
   TotoSweepLightStatus _status = TotoSweepLightStatus.idle;
@@ -40,6 +41,7 @@ class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
   int _completedLoops = 0;
 
   // 自定义配置参数
+  String _previewText = 'TOTO SWEEP';
   double _scaleRatio = 1.3;
   double _letterSpacingRatio = 1.4;
   Color _sweepColor = Colors.amberAccent;
@@ -47,8 +49,27 @@ class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
   int _sweepIntervalMs = 80;
   bool _loop = true;
 
+  // 新增控制参数
+  double _fontSize = 20.0;
+  double _letterSpacing = 6.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController(text: _previewText);
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // 保护输入框为空时的情况，传一个空格以占位
+    final displayText = _textController.text.isEmpty ? ' ' : _textController.text;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Toto Sweep Light 示例'),
@@ -74,7 +95,7 @@ class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: TotoSweepLight(
-                      text: 'TOTO SWEEP',
+                      text: displayText,
                       controller: _manualController,
                       scaleRatio: _scaleRatio,
                       letterSpacingRatio: _letterSpacingRatio,
@@ -83,10 +104,10 @@ class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
                       sweepInterval: Duration(milliseconds: _sweepIntervalMs),
                       loop: _loop,
                       autoStart: true,
-                      textStyle: const TextStyle(
-                        fontSize: 20,
+                      textStyle: TextStyle(
+                        fontSize: _fontSize,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 6,
+                        letterSpacing: _letterSpacing,
                         color: Colors.grey,
                       ),
                       onStatusChanged: (status, progress, completedLoops) {
@@ -99,6 +120,25 @@ class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
                     ),
                   ),
                 ),
+              ),
+              const SizedBox(height: 20),
+
+              // 1.5 文本内容编辑区域
+              _buildSectionTitle('文本内容'),
+              TextField(
+                controller: _textController,
+                decoration: const InputDecoration(
+                  hintText: '请输入预览文字',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Color(0xFF181825),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                ),
+                onChanged: (val) {
+                  setState(() {
+                    _previewText = val;
+                  });
+                },
               ),
               const SizedBox(height: 20),
 
@@ -165,9 +205,25 @@ class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
+                      // 字体大小
+                      _buildSliderRow(
+                        '字体大小 (${_fontSize.toStringAsFixed(1)})',
+                        _fontSize,
+                        12.0,
+                        36.0,
+                        (val) => setState(() => _fontSize = val),
+                      ),
+                      // 初始字间距
+                      _buildSliderRow(
+                        '初始字间距 (${_letterSpacing.toStringAsFixed(1)})',
+                        _letterSpacing,
+                        0.0,
+                        20.0,
+                        (val) => setState(() => _letterSpacing = val),
+                      ),
                       // 缩放倍率
                       _buildSliderRow(
-                        '缩放倍率 (${_scaleRatio.toStringAsFixed(1)})',
+                        '扫光缩放倍率 (${_scaleRatio.toStringAsFixed(1)})',
                         _scaleRatio,
                         1.0,
                         2.0,
@@ -175,7 +231,7 @@ class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
                       ),
                       // 字间距扩展倍率
                       _buildSliderRow(
-                        '字间距倍率 (${_letterSpacingRatio.toStringAsFixed(1)})',
+                        '扫光字间距倍率 (${_letterSpacingRatio.toStringAsFixed(1)})',
                         _letterSpacingRatio,
                         1.0,
                         3.0,

@@ -6,7 +6,7 @@
 
 * 🌟 **多重变换**：支持大小缩放（Scale）、字间距扩展（Letter Spacing）和颜色渐变（Color Lerp）的三维立体扫光动效。
 * ⚡ **高流畅度**：内部采用 `RepaintBoundary` 进行视图重绘隔离，确保每个字符独立动画时的渲染性能。
-* 🎛️ **外部控制器**：通过 `TextSweepLightController` 支持外部启动、暂停、继续、停止和重置动画。
+* 🎛️ **外部控制器**：通过 `TotoSweepLightController` 支持外部启动、暂停、继续、停止和重置动画。
 * 🛠️ **高度可定制**：
   * 支持自定义扫光颜色、字符时长、扫光间隔。
   * 可配置三阶段动画时长占比（开始变换、维持状态、恢复初始）。
@@ -26,7 +26,7 @@
 
 ```yaml
 dependencies:
-  toto_sweep_light: ^0.0.1
+  toto_sweep_light: ^0.0.3
 ```
 
 导入包：
@@ -38,7 +38,7 @@ import 'package:toto_sweep_light/toto_sweep_light.dart';
 ### 基础用法
 
 ```dart
-TextSweepLight(
+TotoSweepLight(
   text: 'HELLO WORLD',
   textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey),
   sweepColor: Colors.amber,
@@ -49,7 +49,7 @@ TextSweepLight(
 ### 循环播放
 
 ```dart
-TextSweepLight(
+TotoSweepLight(
   text: 'LOADING...',
   loop: true,
   loopCount: 3, // 播放 3 次后停止，如果不设置或设为 null 则无限循环
@@ -62,10 +62,10 @@ TextSweepLight(
 
 ```dart
 // 1. 初始化控制器
-final controller = TextSweepLightController();
+final controller = TotoSweepLightController();
 
 // 2. 绑定组件
-TextSweepLight(
+TotoSweepLight(
   text: 'SWEEPING EFFECT',
   controller: controller,
 )
@@ -92,11 +92,11 @@ controller.reset();  // 重置
 | **durationRatio** | `List<int>` | `[1, 1, 1]` | 动画三阶段的时长占比：`[开始变换, 维持状态, 恢复初始]`。 |
 | **loop** | `bool` | `false` | 是否开启循环播放。 |
 | **loopCount** | `int?` | `null` | 循环播放的次数限制。为 `null` 且 `loop` 为 `true` 时代表无限循环。 |
-| **controller** | `TextSweepLightController?` | `null` | 动画的外部控制器。 |
+| **controller** | `TotoSweepLightController?` | `null` | 动画的外部控制器。 |
 | **autoStart** | `bool` | `false` | 初始化时是否自动开始播放动画。 |
-| **onStatusChanged** | `TextSweepLightStatusCallback?` | `null` | 动画状态变化时的回调函数。可获取状态、进度和已完成轮次。 |
+| **onStatusChanged** | `TotoSweepLightStatusCallback?` | `null` | 动画状态变化时的回调函数。可获取状态、进度和已完成轮次。 |
 
-## 动画状态枚举 (`TextSweepLightStatus`)
+## 动画状态枚举 (`TotoSweepLightStatus`)
 
 * `idle`：闲置状态，动画未开始或已重置。
 * `running`：动画正在播放。

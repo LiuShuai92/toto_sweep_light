@@ -1,3 +1,8 @@
+## 0.0.3
+
+* 破坏性改动 (Breaking Change)：将核心类名从 `TextSweepLight` 重命名为 `TotoSweepLight`。
+* 将配套的控制器、状态枚举及状态回调重命名为 `TotoSweepLightController`、`TotoSweepLightStatus` 和 `TotoSweepLightStatusCallback`。
+
 ## 0.0.2
 
 * 修复文件打包结构。

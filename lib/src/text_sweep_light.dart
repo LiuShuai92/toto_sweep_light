@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// 文字扫光动画的状态枚举
-enum TextSweepLightStatus {
+enum TotoSweepLightStatus {
   /// 闲置状态，动画未开始或已重置
   idle,
 
@@ -19,8 +19,8 @@ enum TextSweepLightStatus {
 /// - [status]：当前动画状态
 /// - [progress]：当前轮次的动画进度，范围 [0.0, 1.0]
 /// - [completedLoops]：已完成的循环轮次数
-typedef TextSweepLightStatusCallback = void Function(
-  TextSweepLightStatus status,
+typedef TotoSweepLightStatusCallback = void Function(
+  TotoSweepLightStatus status,
   double progress,
   int completedLoops,
 );
@@ -30,9 +30,9 @@ typedef TextSweepLightStatusCallback = void Function(
 /// 用于外部控制扫光动画的启动、停止和重置。
 /// 使用方式：
 /// ```dart
-/// final controller = TextSweepLightController();
+/// final controller = TotoSweepLightController();
 ///
-/// TextSweepLight(
+/// TotoSweepLight(
 ///   text: 'HELLO WORLD',
 ///   controller: controller,
 /// );
@@ -46,12 +46,12 @@ typedef TextSweepLightStatusCallback = void Function(
 /// // 重置到初始状态
 /// controller.reset();
 /// ```
-class TextSweepLightController {
-  _TextSweepLightState? _state;
+class TotoSweepLightController {
+  _TotoSweepLightState? _state;
 
   /// 当前动画状态
-  TextSweepLightStatus get status =>
-      _state?._status ?? TextSweepLightStatus.idle;
+  TotoSweepLightStatus get status =>
+      _state?._status ?? TotoSweepLightStatus.idle;
 
   /// 当前动画进度，范围 [0.0, 1.0]
   double get progress => _state?._progress ?? 0.0;
@@ -74,7 +74,7 @@ class TextSweepLightController {
   /// 重置扫光动画到初始闲置状态
   void reset() => _state?._reset();
 
-  void _attach(_TextSweepLightState state) {
+  void _attach(_TotoSweepLightState state) {
     _state = state;
   }
 
@@ -91,11 +91,11 @@ class TextSweepLightController {
 /// 变换过程分为三个阶段（时长占比可自定义）：
 /// 1. **开始变换**：文字逐渐放大、字间距扩大、颜色变为扫光色
 /// 2. **维持时长**：保持变换后的状态
-/// 3. **恢复初始**：恢复到初始的大小、间距和颜色
+/// 3. **恢复初始**：恢复到初始的大小、间距 and 颜色
 ///
 /// 示例：
 /// ```dart
-/// TextSweepLight(
+/// TotoSweepLight(
 ///   text: 'HELLO WORLD',
 ///   textStyle: TextStyle(fontSize: 16, color: Colors.white),
 ///   sweepColor: Colors.amber,
@@ -109,8 +109,8 @@ class TextSweepLightController {
 ///   },
 /// )
 /// ```
-class TextSweepLight extends StatefulWidget {
-  const TextSweepLight({
+class TotoSweepLight extends StatefulWidget {
+  const TotoSweepLight({
     Key? key,
     required this.text,
     this.textStyle,
@@ -165,13 +165,13 @@ class TextSweepLight extends StatefulWidget {
   final int? loopCount;
 
   /// 外部控制器，用于控制动画的启动/停止/重置
-  final TextSweepLightController? controller;
+  final TotoSweepLightController? controller;
 
   /// 是否在组件初始化时自动开始动画
   final bool autoStart;
 
   /// 动画状态变化回调
-  final TextSweepLightStatusCallback? onStatusChanged;
+  final TotoSweepLightStatusCallback? onStatusChanged;
 
   /// 文字行的主轴对齐方式
   final MainAxisAlignment mainAxisAlignment;
@@ -180,13 +180,13 @@ class TextSweepLight extends StatefulWidget {
   final CrossAxisAlignment crossAxisAlignment;
 
   @override
-  State<TextSweepLight> createState() => _TextSweepLightState();
+  State<TotoSweepLight> createState() => _TotoSweepLightState();
 }
 
-class _TextSweepLightState extends State<TextSweepLight>
+class _TotoSweepLightState extends State<TotoSweepLight>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  TextSweepLightStatus _status = TextSweepLightStatus.idle;
+  TotoSweepLightStatus _status = TotoSweepLightStatus.idle;
   double _progress = 0.0;
   int _completedLoops = 0;
 
@@ -240,7 +240,7 @@ class _TextSweepLightState extends State<TextSweepLight>
   }
 
   @override
-  void didUpdateWidget(covariant TextSweepLight oldWidget) {
+  void didUpdateWidget(covariant TotoSweepLight oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     // 控制器变更
@@ -274,7 +274,7 @@ class _TextSweepLightState extends State<TextSweepLight>
 
       // 如果文本变了且正在运行，重新启动
       if (widget.text != oldWidget.text &&
-          _status == TextSweepLightStatus.running) {
+          _status == TotoSweepLightStatus.running) {
         _animationController.forward(from: 0.0);
       }
     }
@@ -356,7 +356,7 @@ class _TextSweepLightState extends State<TextSweepLight>
 
     _progress = _animationController.value.clamp(0.0, 1.0);
 
-    if (_status == TextSweepLightStatus.running) {
+    if (_status == TotoSweepLightStatus.running) {
       widget.onStatusChanged?.call(_status, _progress, _completedLoops);
     }
 
@@ -367,7 +367,7 @@ class _TextSweepLightState extends State<TextSweepLight>
     if (!mounted) return;
     switch (status) {
       case AnimationStatus.forward:
-        _updateStatus(TextSweepLightStatus.running);
+        _updateStatus(TotoSweepLightStatus.running);
         break;
       case AnimationStatus.completed:
         _completedLoops++;
@@ -375,7 +375,7 @@ class _TextSweepLightState extends State<TextSweepLight>
             (widget.loopCount == null || _completedLoops < widget.loopCount!)) {
           _animationController.forward(from: 0.0);
         } else {
-          _updateStatus(TextSweepLightStatus.completed);
+          _updateStatus(TotoSweepLightStatus.completed);
         }
         break;
       case AnimationStatus.dismissed:
@@ -385,7 +385,7 @@ class _TextSweepLightState extends State<TextSweepLight>
     }
   }
 
-  void _updateStatus(TextSweepLightStatus newStatus) {
+  void _updateStatus(TotoSweepLightStatus newStatus) {
     if (_status != newStatus) {
       _status = newStatus;
       widget.onStatusChanged?.call(_status, _progress, _completedLoops);
@@ -407,15 +407,15 @@ class _TextSweepLightState extends State<TextSweepLight>
 
   /// 暂停动画（保持在当前位置）
   void _pause() {
-    if (_status == TextSweepLightStatus.running) {
+    if (_status == TotoSweepLightStatus.running) {
       _animationController.stop();
-      _updateStatus(TextSweepLightStatus.paused);
+      _updateStatus(TotoSweepLightStatus.paused);
     }
   }
 
   /// 从暂停位置继续动画
   void _resume() {
-    if (_status == TextSweepLightStatus.paused) {
+    if (_status == TotoSweepLightStatus.paused) {
       _animationController.forward();
     }
   }
@@ -423,9 +423,9 @@ class _TextSweepLightState extends State<TextSweepLight>
   /// 停止动画并回到闲置状态
   void _stop() {
     _animationController.stop();
-    if (_status == TextSweepLightStatus.running ||
-        _status == TextSweepLightStatus.paused) {
-      _updateStatus(TextSweepLightStatus.idle);
+    if (_status == TotoSweepLightStatus.running ||
+        _status == TotoSweepLightStatus.paused) {
+      _updateStatus(TotoSweepLightStatus.idle);
     }
   }
 
@@ -435,7 +435,7 @@ class _TextSweepLightState extends State<TextSweepLight>
     _animationController.reset();
     _progress = 0.0;
     _completedLoops = 0;
-    _updateStatus(TextSweepLightStatus.idle);
+    _updateStatus(TotoSweepLightStatus.idle);
     setState(() {});
   }
 
@@ -580,6 +580,6 @@ class _CharAnimValues {
     spacingLerp: 0.0,
   );
 
-  /// 是否为无动画的初始状态
+  /// 是否为无动画 of 初始状态
   bool get isIdentity => scale == 1.0 && colorLerp == 0.0;
 }

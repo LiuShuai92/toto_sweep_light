@@ -1,30 +1,24 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:toto_sweep_light/main.dart';
+import 'package:toto_sweep_light/toto_sweep_light.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('TotoSweepLight rendering test', (WidgetTester tester) async {
+    // 渲染测试
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: TotoSweepLight(
+            text: 'HELLO',
+          ),
+        ),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // 验证字符是否都在 Row 里渲染出来了
+    expect(find.text('H'), findsOneWidget);
+    expect(find.text('E'), findsOneWidget);
+    expect(find.text('L'), findsNWidgets(2));
+    expect(find.text('O'), findsOneWidget);
   });
 }

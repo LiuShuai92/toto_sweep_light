@@ -1,12 +1,13 @@
 name: toto_sweep_light
 description: A Flutter package for text sweep light animation effect, enabling word-by-word transitions with customizable color, scale, letter spacing, duration, and loops.
-version: 0.0.2
+version: 0.0.3
 repository: https://github.com/LiuShuai92/toto_sweep_light
 issue_tracker: https://github.com/LiuShuai92/toto_sweep_light/issues
 
 
 environment:
   sdk: ^3.6.2
+
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions

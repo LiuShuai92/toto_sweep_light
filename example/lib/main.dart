@@ -32,10 +32,10 @@ class SweepLightDemoPage extends StatefulWidget {
 }
 
 class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
-  final TextSweepLightController _manualController = TextSweepLightController();
+  final TotoSweepLightController _manualController = TotoSweepLightController();
 
   // 动画状态相关变量
-  TextSweepLightStatus _status = TextSweepLightStatus.idle;
+  TotoSweepLightStatus _status = TotoSweepLightStatus.idle;
   double _progress = 0.0;
   int _completedLoops = 0;
 
@@ -71,7 +71,7 @@ class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
                   border: Border.all(color: Colors.white12),
                 ),
                 child: Center(
-                  child: TextSweepLight(
+                  child: TotoSweepLight(
                     text: 'TOTO SWEEP LIGHT',
                     controller: _manualController,
                     scaleRatio: _scaleRatio,

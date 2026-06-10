@@ -1,3 +1,9 @@
+## 0.0.4
+
+* 修复 example 示例应用在大、小屏设备上的 Right overflow 布局溢出问题。
+* 重构控制按钮布局为 Wrap，并优化文案长度。
+* 修改 demo 的包名 (Bundle Identifier & Application ID) 及应用名。
+
 ## 0.0.3
 
 * 破坏性改动 (Breaking Change)：将核心类名从 `TextSweepLight` 重命名为 `TotoSweepLight`。

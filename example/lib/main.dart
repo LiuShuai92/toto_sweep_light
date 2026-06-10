@@ -71,29 +71,32 @@ class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
                   border: Border.all(color: Colors.white12),
                 ),
                 child: Center(
-                  child: TotoSweepLight(
-                    text: 'TOTO SWEEP LIGHT',
-                    controller: _manualController,
-                    scaleRatio: _scaleRatio,
-                    letterSpacingRatio: _letterSpacingRatio,
-                    sweepColor: _sweepColor,
-                    characterDuration: Duration(milliseconds: _characterDurationMs),
-                    sweepInterval: Duration(milliseconds: _sweepIntervalMs),
-                    loop: _loop,
-                    autoStart: true,
-                    textStyle: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 8,
-                      color: Colors.grey,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: TotoSweepLight(
+                      text: 'TOTO SWEEP',
+                      controller: _manualController,
+                      scaleRatio: _scaleRatio,
+                      letterSpacingRatio: _letterSpacingRatio,
+                      sweepColor: _sweepColor,
+                      characterDuration: Duration(milliseconds: _characterDurationMs),
+                      sweepInterval: Duration(milliseconds: _sweepIntervalMs),
+                      loop: _loop,
+                      autoStart: true,
+                      textStyle: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 6,
+                        color: Colors.grey,
+                      ),
+                      onStatusChanged: (status, progress, completedLoops) {
+                        setState(() {
+                          _status = status;
+                          _progress = progress;
+                          _completedLoops = completedLoops;
+                        });
+                      },
                     ),
-                    onStatusChanged: (status, progress, completedLoops) {
-                      setState(() {
-                        _status = status;
-                        _progress = progress;
-                        _completedLoops = completedLoops;
-                      });
-                    },
                   ),
                 ),
               ),
@@ -119,39 +122,35 @@ class _SweepLightDemoPageState extends State<SweepLightDemoPage> {
 
               // 3. 控制面板区
               _buildSectionTitle('手动控制'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                alignment: WrapAlignment.center,
                 children: [
                   ElevatedButton(
                     onPressed: () => _manualController.start(),
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                    child: const Text('启动 (Start)'),
+                    child: const Text('启动'),
                   ),
                   ElevatedButton(
                     onPressed: () => _manualController.pause(),
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-                    child: const Text('暂停 (Pause)'),
+                    child: const Text('暂停'),
                   ),
                   ElevatedButton(
                     onPressed: () => _manualController.resume(),
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                    child: const Text('恢复 (Resume)'),
+                    child: const Text('恢复'),
                   ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
                   ElevatedButton(
                     onPressed: () => _manualController.stop(),
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                    child: const Text('停止 (Stop)'),
+                    child: const Text('停止'),
                   ),
                   ElevatedButton(
                     onPressed: () => _manualController.reset(),
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
-                    child: const Text('重置 (Reset)'),
+                    child: const Text('重置'),
                   ),
                 ],
               ),
